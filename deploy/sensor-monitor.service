@@ -1,0 +1,18 @@
+[Unit]
+Description=IoT Sensor Monitor (.NET service)
+After=network.target postgresql.service
+
+[Service]
+WorkingDirectory=/opt/sensor-monitor
+ExecStart=/usr/bin/dotnet /opt/sensor-monitor/service.dll
+Restart=always
+RestartSec=5
+KillSignal=SIGINT
+SyslogIdentifier=sensor-monitor
+User=www-data
+Environment=ASPNETCORE_ENVIRONMENT=Production
+Environment=ASPNETCORE_URLS=http://127.0.0.1:5080
+Environment=ConnectionStrings__Db=Host=localhost;Port=5432;Database=sensors;Username=sensors;Password=CHANGEME
+
+[Install]
+WantedBy=multi-user.target

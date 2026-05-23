@@ -1,6 +1,6 @@
 # IoT Sensor Monitor
 
-An ASP.NET Core service that ingests ESP32 sensor frames over WebSocket, stores readings in PostgreSQL, evaluates per-device thresholds, and broadcasts live updates to a React dashboard. Deploys on EC2 behind nginx.
+An ASP.NET Core service that ingests ESP32 sensor frames over WebSocket, stores readings in PostgreSQL, evaluates per-device thresholds, and broadcasts live updates to a React dashboard.
 
 ## Prerequisites
 

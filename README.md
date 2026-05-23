@@ -1,9 +1,17 @@
 # IoT Sensor Monitor
 
-ASP.NET Core service ingests ESP32 sensor frames over WebSocket, stores readings in Postgres, evaluates per-device thresholds, and broadcasts live updates to a React dashboard. Deploys on EC2 behind nginx.
+An ASP.NET Core service that ingests ESP32 sensor frames over WebSocket, stores readings in PostgreSQL, evaluates per-device thresholds, and broadcasts live updates to a React dashboard. Deploys on EC2 behind nginx.
 
-## Local run
-```
+## Prerequisites
+
+- .NET 10 SDK
+- Node 18+
+- PostgreSQL 16
+- Arduino IDE with the WebSockets (Markus Sattler) and ArduinoJson libraries (only to flash real ESP32 hardware)
+
+## Build & run
+
+```bash
 # 1. Postgres
 brew services start postgresql@16
 createdb sensors
@@ -19,15 +27,4 @@ cd web && npm run dev
 cd scripts && npm i && node simulate.mjs
 ```
 
-## Frame schema
-```json
-{ "deviceId": "esp32-front-door", "type": "door", "state": "open", "value": null, "ts": 1714600000000 }
-```
-
-## Thresholds
-POST `/api/thresholds` `{ deviceId, metric: "state"|"value", op: "open"|">"|"<"|..., value, severity: "warn"|"crit" }`
-- `state` matches the literal state (e.g., `op:"open"` fires when state == "open").
-- `value` compares numeric values from the frame.
-
-## ESP32
-Edit `firmware/sensor_node/sensor_node.ino` Wi-Fi + `WS_HOST` constants, flash via Arduino IDE (libraries: WebSockets by Markus Sattler, ArduinoJson). Reed switch on GPIO 4 to GND, PIR OUT on GPIO 5.
+The simulator feeds synthetic frames so you can run the full stack without hardware. To use a real device, edit the Wi-Fi and `WS_HOST` constants in `firmware/sensor_node/sensor_node.ino` and flash it via the Arduino IDE (reed switch on GPIO 4 to GND, PIR OUT on GPIO 5).

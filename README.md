@@ -29,11 +29,5 @@ POST `/api/thresholds` `{ deviceId, metric: "state"|"value", op: "open"|">"|"<"|
 - `state` matches the literal state (e.g., `op:"open"` fires when state == "open").
 - `value` compares numeric values from the frame.
 
-## Deploy to EC2
-```
-HOST=ec2-x-x-x-x.compute.amazonaws.com KEY=~/.ssh/key.pem ./deploy/deploy.sh
-```
-Update the DB password in `deploy/sensor-monitor.service` and the postgres `CREATE USER` line in `deploy.sh` before running.
-
 ## ESP32
 Edit `firmware/sensor_node/sensor_node.ino` Wi-Fi + `WS_HOST` constants, flash via Arduino IDE (libraries: WebSockets by Markus Sattler, ArduinoJson). Reed switch on GPIO 4 to GND, PIR OUT on GPIO 5.

@@ -2,13 +2,6 @@
 
 ASP.NET Core service ingests ESP32 sensor frames over WebSocket, stores readings in Postgres, evaluates per-device thresholds, and broadcasts live updates to a React dashboard. Deploys on EC2 behind nginx.
 
-## Layout
-- `service/`: ASP.NET Core minimal API + EF Core (Postgres). WS `/ingest`, WS `/live`, REST `/api/*`.
-- `web/`: Vite + React dashboard.
-- `firmware/sensor_node/`: ESP32 Arduino sketch (reed switch + PIR).
-- `scripts/simulate.mjs`: fake ESP32 for local dev.
-- `deploy/`: nginx config, systemd unit, deploy script.
-
 ## Local run
 ```
 # 1. Postgres
